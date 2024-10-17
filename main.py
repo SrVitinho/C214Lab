@@ -57,9 +57,6 @@ def delete_by_id(id: int, db: Session = Depends(get_db)):
 
 @app.post("/register")
 def register_user(users: CreateUser, db: Session = Depends(get_db)):
-    db_user = get_user_by_username(db, username=users.username)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Username taken!")
     return create_user(db=db, user=users)
 
 

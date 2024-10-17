@@ -2,8 +2,8 @@ from typing import List, Type
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from keys import key_jtw as key
+from passlib.context import CryptContext
 from Users.User import User
 from sqlalchemy.orm import Session
 
@@ -19,17 +19,19 @@ oauth2_schema = OAuth2PasswordBearer(tokenUrl="token")
 def get_user_by_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
-
 def create_user(db: Session, user: CreateUser):
-    print("HELLO", user.password)
+    db_user = get_user_by_username(db, username=user.username)
+    print(db_user)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Usuario ja cadastrado!")
     hased_password = pwd_context.hash(user.password)
     db_user = User(username=user.username, hased_password=hased_password)
     db.add(db_user)
     db.commit()
-    return "Cadastrado"
+    return {"detail": "Cadastrado"}
 
 
-def authenticate_user(username: str, password: str, db: Session):
+def authenticate_user(db: Session, username: str, password: str):
     users = db.query(User).filter(User.username == username).first()
     if not users:
         return False
