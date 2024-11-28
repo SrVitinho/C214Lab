@@ -25,8 +25,8 @@ class ReceitaRepository:
         return receita
 
     @staticmethod
-    def find_by_id_user(db: Session, id_user: int) -> Receita:
-        return db.query(Receita).filter(Receita.id_creator == id_user).first()
+    def find_by_id_user(db: Session, id_user: int) -> list[Type[ReceitaClass]]:
+        return db.query(ReceitaClass).filter(ReceitaClass.id_creator == id_user).all()
 
     @staticmethod
     def find_by_id(db: Session, id: int) -> Receita:
