@@ -16,7 +16,7 @@ class ReceitaRepository:
         return db.query()
 
     @staticmethod
-    def save(db: Session, receita: ReceitaClass) -> Receita:
+    def save(db: Session, receita: ReceitaClass) -> ReceitaClass:
         if receita.id:
             db.merge(receita)
         else:
