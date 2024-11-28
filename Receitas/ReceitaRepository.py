@@ -30,15 +30,15 @@ class ReceitaRepository:
 
     @staticmethod
     def find_by_id(db: Session, id: int) -> ReceitaClass:
-        return db.query(ReceitaClass).get(id).first()
+        return db.query(ReceitaClass).get(id)
 
     @staticmethod
     def exists_by_id(db: Session, id: int) -> bool:
-        return db.query(ReceitaClass).get(id).first() is not None
+        return db.query(ReceitaClass).get(id) is not None
 
     @staticmethod
     def delete_by_id(db: Session, id: int) -> None:
-        receita = db.query(Receita).get(id).first()
+        receita = db.query(Receita).get(id)
         if receita is not None:
             db.delete(receita)
             db.commit()
