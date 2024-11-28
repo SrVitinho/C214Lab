@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class receitaBase(BaseModel):
+    id: int
     nome: str
     modoDePeparo: str
     tempoDePreparo: int
