@@ -29,12 +29,12 @@ class ReceitaRepository:
         return db.query(ReceitaClass).filter(ReceitaClass.id_creator == id_user).all()
 
     @staticmethod
-    def find_by_id(db: Session, id: int) -> Receita:
-        return db.query(Receita).get(id).first()
+    def find_by_id(db: Session, id: int) -> ReceitaClass:
+        return db.query(ReceitaClass).get(id).first()
 
     @staticmethod
     def exists_by_id(db: Session, id: int) -> bool:
-        return db.query(Receita).get(id).first() is not None
+        return db.query(ReceitaClass).get(id).first() is not None
 
     @staticmethod
     def delete_by_id(db: Session, id: int) -> None:
