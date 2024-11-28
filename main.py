@@ -58,7 +58,7 @@ def find_by_id(id: int, db: Session = Depends(get_db)):
     return ReceitaSchemas.ReceitaResponse.from_orm(receita)
 
 
-@app.get("/receitas/cursos/pessoal/{id_user}")
+@app.get("/receitas/cursos/pessoal/{id}")
 def find_by_id_user(id: int, db: Session = Depends(get_db)):
     print("gabiru1")
     receitas = ReceitaRepository.find_by_id_user(db, id)
