@@ -50,22 +50,24 @@ def find_all(db: Session = Depends(get_db)):
 
 @app.get("/receita/cursos/{id}", response_model=ReceitaSchemas.ReceitaResponse)
 def find_by_id(id: int, db: Session = Depends(get_db)):
-    receitas = ReceitaRepository.find_by_id(db, id)
-    if not receitas:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="receita não encontrado"
-        )
-    return [ReceitaSchemas.ReceitaResponse.from_orm(receita) for receita in receitas]
-
-
-@app.get("/receitas/cursos/pessoal/{id_user}")
-def find_by_id_user(id: int, db: Session = Depends(get_db)):
-    receita = ReceitaRepository.find_by_id_user(db, id)
+    receita = ReceitaRepository.find_by_id(db, id)
     if not receita:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="receita não encontrado"
         )
     return ReceitaSchemas.ReceitaResponse.from_orm(receita)
+
+
+@app.get("/receitas/cursos/pessoal/{id_user}")
+def find_by_id_user(id: int, db: Session = Depends(get_db)):
+    print("gabiru1")
+    receitas = ReceitaRepository.find_by_id_user(db, id)
+    if not receitas:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="receita não encontrado"
+        )
+    print("gabiru2")
+    return [ReceitaSchemas.ReceitaResponse.from_orm(receita) for receita in receitas]
 
 
 @app.delete("/receita/cursos/{id}", status_code=status.HTTP_204_NO_CONTENT)
