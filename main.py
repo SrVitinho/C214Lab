@@ -84,7 +84,7 @@ def register_user(users: CreateUser, db: Session = Depends(get_db)):
 
 
 @app.post("/token")
-def login_for_acess_token(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+def login_for_acess_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     users = authenticate_user(form_data.username, form_data.password, db)
     if not users:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -94,7 +94,7 @@ def login_for_acess_token(db: Session = Depends(get_db), form_data: OAuth2Passwo
     acess_token = create_acess_token(
         data={"sub": users.username}
     )
-    return {"acess_token": acess_token, "token_type": "bearer", "id": user.id}
+    return {"acess_token": acess_token, "token_type": "bearer", "id": users.id}
 
 
 @app.get("/verify-token/{token}")

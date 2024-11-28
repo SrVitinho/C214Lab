@@ -32,7 +32,7 @@ def create_user(db: Session, user: CreateUser):
     return {"detail": "Cadastrado"}
 
 
-def authenticate_user(db: Session, username: str, password: str):
+def authenticate_user(username: str, password: str, db: Session):
     users = db.query(User).filter(User.username == username).first()
     if not users:
         return False
