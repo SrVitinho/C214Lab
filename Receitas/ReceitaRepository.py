@@ -38,7 +38,7 @@ class ReceitaRepository:
 
     @staticmethod
     def delete_by_id(db: Session, id: int) -> None:
-        receita = db.query(Receita).get(id)
+        receita = db.query(ReceitaClass).get(id)
         if receita is not None:
             db.delete(receita)
             db.commit()
