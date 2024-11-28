@@ -5,6 +5,8 @@ class receitaBase(BaseModel):
     nome: str
     modoDePeparo: str
     tempoDePreparo: int
+    id_creator: int
+    nome_creator: str
 
 
 class ReceitaRequest(receitaBase):

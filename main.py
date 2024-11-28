@@ -17,6 +17,19 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def root():
@@ -45,6 +58,16 @@ def find_by_id(id: int, db: Session = Depends(get_db)):
     return ReceitaSchemas.ReceitaResponse.from_orm(receita)
 
 
+@app.get("/receitas/cursos/pessoal/{id_user}")
+def find_by_id_user(id: int, db: Session = Depends(get_db)):
+    receita = ReceitaRepository.find_by_id_user(db, id)
+    if not receita:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="receita não encontrado"
+        )
+    return ReceitaSchemas.ReceitaResponse.from_orm(receita)
+
+
 @app.delete("/receita/cursos/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_by_id(id: int, db: Session = Depends(get_db)):
     if not ReceitaRepository.exists_by_id(db, id):
@@ -61,7 +84,7 @@ def register_user(users: CreateUser, db: Session = Depends(get_db)):
 
 
 @app.post("/token")
-def login_for_acess_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login_for_acess_token(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
     users = authenticate_user(form_data.username, form_data.password, db)
     if not users:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,

@@ -12,6 +12,10 @@ class ReceitaRepository:
         return db.query(ReceitaClass).all()
 
     @staticmethod
+    def seeMyRecipes(db: Session, id: int):
+        return db.query()
+
+    @staticmethod
     def save(db: Session, receita: ReceitaClass) -> Receita:
         if receita.id:
             db.merge(receita)
@@ -19,6 +23,10 @@ class ReceitaRepository:
             db.add(receita)
         db.commit()
         return receita
+
+    @staticmethod
+    def find_by_id_user(db: Session, id_user: int) -> Receita:
+        return db.query(Receita).filter(Receita.id_creator == id_user).first()
 
     @staticmethod
     def find_by_id(db: Session, id: int) -> Receita:

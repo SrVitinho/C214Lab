@@ -10,3 +10,5 @@ class Receita(Base):
     nome: str = Column(String(100), nullable=False)
     modoDePeparo: str = Column(String(2550), nullable=False)
     tempoDePreparo: int = Column(Integer, nullable=False)
+    id_creator: int = Column(Integer, nullable=False)
+    nome_creator: str = Column(String(100), nullable=False)
