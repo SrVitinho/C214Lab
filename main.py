@@ -94,7 +94,7 @@ def login_for_acess_token(db: Session = Depends(get_db), form_data: OAuth2Passwo
     acess_token = create_acess_token(
         data={"sub": users.username}
     )
-    return {"acess_token": acess_token, "token_type": "bearer"}
+    return {"acess_token": acess_token, "token_type": "bearer", "id": user.id}
 
 
 @app.get("/verify-token/{token}")
