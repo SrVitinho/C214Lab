@@ -46,6 +46,7 @@ def create(request: ReceitaSchemas.ReceitaRequest, db: Session = Depends(get_db)
 def create(request: ReceitaSchemas.ReceitaRequestUpdate, db: Session = Depends(get_db)):
     receita = ReceitaClass(**request.dict())
     print(receita)
+    print(receita.id, receita.nome)
     if receita.id is not int:
         return status.HTTP_400_BAD_REQUEST
     receita = ReceitaRepository.update(db, receita)
