@@ -28,7 +28,7 @@ class ReceitaRepository:
     def update(db: Session, receitaTo: ReceitaClass, id: int) -> ReceitaClass:
         receita = db.query(ReceitaClass).get(id)
         if receita is None:
-            return
+            return None
         receita = receitaTo
         db.commit()
         return receita

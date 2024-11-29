@@ -42,12 +42,13 @@ def create(request: ReceitaSchemas.ReceitaRequest, db: Session = Depends(get_db)
     return ReceitaSchemas.ReceitaResponse.from_orm(receita)
 
 
-@app.put("/receita/update/{id}", response_model=ReceitaSchemas.ReceitaResponse, status_code=status.HTTP_201_CREATED)
-def create(id: int, request: ReceitaSchemas.ReceitaRequest, db: Session = Depends(get_db)):
-    if id is not int:
+@app.put("/receita/update", response_model=ReceitaSchemas.ReceitaResponse, status_code=status.HTTP_201_CREATED)
+def create(request: ReceitaSchemas.ReceitaRequestUpdate, db: Session = Depends(get_db)):
+    receita = ReceitaClass(**request.dict())
+    if receita.id is not int:
         print("Teste AAAAAAAAaa")
         return status.HTTP_400_BAD_REQUEST
-    receita = ReceitaRepository.update(db, ReceitaClass(**request.dict()), id)
+    receita = ReceitaRepository.update(db, receita)
     if receita is not None:
         return ReceitaSchemas.ReceitaResponse.from_orm(receita)
     else:

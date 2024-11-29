@@ -13,6 +13,15 @@ class ReceitaRequest(receitaBase):
     ...
 
 
+class ReceitaRequestUpdate:
+    id: int
+    ...
+
+    class Config:
+        from_attributes = True
+        orm_mode = True
+
+
 class ReceitaResponse(receitaBase):
     id: int
     ...
