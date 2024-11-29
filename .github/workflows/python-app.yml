@@ -1,0 +1,72 @@
+
+name: Python package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python install requirements.txt
+
+        python -m pytest --html=pytest_report.html
+
+    - name: Upload artefats
+      uses: actions/upload-artifact@v3
+      with:
+        name: Report
+        path: /*.html
+
+  build:
+
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python install requirements.txt
+        python -m PyInstaller "main.py"
+        
+    - name: Upload artefats
+      uses: actions/upload-artifact@v3
+      with:
+        name: Pacote
+        path: build/main/main.exe
+        
+  notification:
+      needs: [build, test]
+
+      runs-on: ubuntu-latest
+      env:
+        EMAIL_ADDRESS: ${{secrets.EMAIL_ADDRESS}}
+
+      steps:
+        - name: Executa scripts externos (à fim de enviar e-mail de congratulação!!)
+          uses: actions/checkout@v4
+        - run: sh scripts/shell.sh
