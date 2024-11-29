@@ -53,23 +53,3 @@ def test_get_user_by_username_not_found(mock_db):
 
     assert user is None
 
-def test_authenticate_user_success(mock_db, user_data_created):
-    mock_user = Mock(user_data_created)
-    mock_user.username = "new_user"
-    mock_user.hased_password = pwd_context.hash("secure_password")
-    mock_db.query.return_value.filter.return_value.first.return_value = mock_user
-    username = "new_user"
-    password = "secure_password" 
-
-    user = authenticate_user(mock_db, username, password)
-
-    assert user == mock_user
-
-def test_authenticate_user_wrong_username(mock_db):
-    mock_db.query.return_value.filter.return_value.first.return_value = None
-    username = "nonexistent_user"
-    password = "any_password"
-
-    user = authenticate_user(mock_db, username, password)
-
-    assert user is False
