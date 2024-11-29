@@ -24,8 +24,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python install requirements.txt
-
+        pip install -r requirements.txt
+        ls
         python -m pytest --html=pytest_report.html
 
     - name: Upload artefats
@@ -50,7 +50,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python install requirements.txt
+        pip install -r requirements.txt
         python -m PyInstaller "main.py"
         
     - name: Upload artefats
