@@ -25,7 +25,7 @@ class ReceitaRepository:
         return receita
 
     @staticmethod
-    def update(db: Session, receitaTo: ReceitaClass, id: int) -> ReceitaClass:
+    def update(db: Session, receitaTo: ReceitaClass) -> ReceitaClass:
         receita = db.query(ReceitaClass).get(id)
         if receita is None:
             return None
