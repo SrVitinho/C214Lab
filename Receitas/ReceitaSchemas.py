@@ -13,7 +13,7 @@ class ReceitaRequest(receitaBase):
     ...
 
 
-class ReceitaRequestUpdate:
+class ReceitaRequestUpdate(receitaBase):
     id: int
     ...
 
