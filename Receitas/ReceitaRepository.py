@@ -29,7 +29,12 @@ class ReceitaRepository:
         receita = db.query(ReceitaClass).get(receitaTo.id)
         if receita is None:
             return None
-        receita = receitaTo
+        receita.nome = receitaTo.nome
+        receita.modoDePeparo = receitaTo.modoDePeparo
+        receita.tempoDePreparo = receitaTo.tempoDePreparo
+        receita.id_creator = receitaTo.id_creator
+        receita.nome_creator = receitaTo.nome_creator
+
         db.commit()
         db.refresh(receita)
         return receita
