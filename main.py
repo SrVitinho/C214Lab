@@ -43,7 +43,8 @@ def create(request: ReceitaSchemas.ReceitaRequest, db: Session = Depends(get_db)
 
 
 @app.put("/receita/update", response_model=ReceitaSchemas.ReceitaResponse, status_code=status.HTTP_201_CREATED)
-def create(request: ReceitaSchemas.ReceitaRequestUpdate, db: Session = Depends(get_db)):
+def update(request: ReceitaSchemas.ReceitaRequestUpdate, db: Session = Depends(get_db)):
+    print(type(ReceitaClass(**request.dict()).id))
     if ReceitaClass(**request.dict()).id is not int:
         return status.HTTP_400_BAD_REQUEST
     receita = ReceitaRepository.update(db, ReceitaClass(**request.dict()))
