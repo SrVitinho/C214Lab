@@ -1,0 +1,2 @@
+sudo apt-get install mailutils
+echo "Atualização Código lab214" | mail -s "prezado, boa noite! Apenas passando para lhe informar que existe uma nova versão do código de 214!. Beijocas, Vitor, Gabriel, Natacha e Bernardo" "$EMAIL_ADDRESS"
