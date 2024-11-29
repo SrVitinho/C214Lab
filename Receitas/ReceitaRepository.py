@@ -25,6 +25,15 @@ class ReceitaRepository:
         return receita
 
     @staticmethod
+    def update(db: Session, receitaTo: ReceitaClass, id: int) -> ReceitaClass:
+        receita = db.get(id)
+        if receita is None:
+            return
+        receita = receitaTo
+        db.commit()
+        return receita
+
+    @staticmethod
     def find_by_id_user(db: Session, id_user: int) -> list[Type[ReceitaClass]]:
         return db.query(ReceitaClass).filter(ReceitaClass.id_creator == id_user).all()
 

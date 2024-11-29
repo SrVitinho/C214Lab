@@ -42,6 +42,15 @@ def create(request: ReceitaSchemas.ReceitaRequest, db: Session = Depends(get_db)
     return ReceitaSchemas.ReceitaResponse.from_orm(receita)
 
 
+@app.put("/receita/update/{id}", response_model=ReceitaSchemas.ReceitaResponse, status_code=status.HTTP_201_CREATED)
+def create(request: ReceitaSchemas.ReceitaRequest, id: int, db: Session = Depends(get_db)):
+    receita = ReceitaRepository.update(db, ReceitaClass(**request.dict()), id)
+    if receita is not None:
+        return ReceitaSchemas.ReceitaResponse.from_orm(receita)
+    else:
+        return status.HTTP_404_NOT_FOUND
+
+
 @app.get("/receita/cursos", response_model=list[ReceitaSchemas.ReceitaResponse])
 def find_all(db: Session = Depends(get_db)):
     receitas = ReceitaRepository.find_all(db)
