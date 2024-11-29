@@ -31,6 +31,7 @@ class ReceitaRepository:
             return None
         receita = receitaTo
         db.commit()
+        db.refresh(receita)
         return receita
 
     @staticmethod
