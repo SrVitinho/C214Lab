@@ -11,7 +11,11 @@ class receitaBase(BaseModel):
 
 
 class ReceitaRequest(receitaBase):
-    ...
+    nome: str
+    modoDePeparo: str
+    tempoDePreparo: int
+    id_creator: int
+    nome_creator: str
 
 
 class ReceitaResponse(receitaBase):
