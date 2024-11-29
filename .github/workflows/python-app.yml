@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-
+        ls
         python -m pytest --html=pytest_report.html
 
     - name: Upload artefats
