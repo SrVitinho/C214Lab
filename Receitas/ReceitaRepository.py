@@ -26,7 +26,7 @@ class ReceitaRepository:
 
     @staticmethod
     def update(db: Session, receitaTo: ReceitaClass, id: int) -> ReceitaClass:
-        receita = db.get(id)
+        receita = db.find_by_id(id)
         if receita is None:
             return
         receita = receitaTo
